@@ -7,6 +7,9 @@ TagManager:
   - wall
   - floor
   - box
+  - goal1
+  - goal2
+  - goal3
   layers:
   - Default
   - TransparentFX
@@ -43,6 +46,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 2738543193
+    locked: 0
+  - name: Floor
+    uniqueID: 1963362731
     locked: 0
   - name: Default
     uniqueID: 0

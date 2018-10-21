@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D info)
 	{
-		if (info.gameObject.tag.Equals("wall") || info.gameObject.tag.Equals("box"))
+		if (info.gameObject.tag.Equals("wall"))
 		{
 			if (key == 1)
 			{
@@ -103,5 +104,39 @@ public class PlayerController : MonoBehaviour
 			key = 0;
 
 		}
+		
+		if (info.gameObject.tag.Equals("box"))
+		{
+
+			if (key == 1 && tr.position == pos)
+			{
+				pos += Vector3.right;
+			}
+
+			else if (key == 2 && tr.position == pos)
+			{
+				pos += Vector3.left;
+			}
+
+
+			else if (key == 3 && tr.position == pos)
+			{
+				pos += Vector3.up;
+			}
+
+			else if (key == 4 && tr.position == pos)
+			{
+				pos += Vector3.down;
+			}
+
+			info.gameObject.transform.position = Vector3.MoveTowards(transform.position, 2 * pos, Time.deltaTime * speed);
+			key = 0;
+		} 
+		
+	}
+	
+	public int GetKey()
+	{
+		return key;
 	}
 }
