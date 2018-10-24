@@ -4,12 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - wall
-  - floor
-  - box
-  - goal1
-  - goal2
-  - goal3
+  - Goal
+  - Crate
+  - Empty
+  - StepText
   layers:
   - Default
   - TransparentFX
@@ -19,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Walls
+  - Crates
   - 
   - 
   - 
@@ -44,15 +42,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 2738543193
-    locked: 0
-  - name: Floor
-    uniqueID: 1963362731
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 4267019193
+  - name: Floor
+    uniqueID: 820441495
+    locked: 0
+  - name: Goals
+    uniqueID: 2536476231
+    locked: 0
+  - name: Units
+    uniqueID: 461236073
+    locked: 0
+  - name: UI
+    uniqueID: 1251635671
     locked: 0

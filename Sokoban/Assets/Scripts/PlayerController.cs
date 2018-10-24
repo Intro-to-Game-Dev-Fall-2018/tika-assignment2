@@ -1,142 +1,100 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Net.Mime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour 
+public class PlayerController : MoveController
 {
+    public LayerMask pushingLayers;
+    
+    AudioSource audioSource;
+    Text stepText;
+    private int numSteps = 0;
 
-	// Use this for initialization
-	private float speed = 2.0f;
-	private Vector3 pos;
-	private Transform tr;
-	private Rigidbody2D myRigidbody;
-	private Animator myAnimator;
-	private int key;
-	private int numSteps;
-	public Text stepText;
- 
-	void Start() 
-	{
-		pos = transform.position;
-		tr = transform;
-		myRigidbody = GetComponent<Rigidbody2D>();
-		myAnimator = GetComponent<Animator>();
-		key = 0;
-		numSteps = 0;
-		stepText.text = "Steps: " + numSteps;
+    Animator myAnimator;
 
-	}
- 
-	void Update() 
-	{
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			SceneManager.LoadScene("Level1");
-		}
- 
-		if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))&& tr.position == pos)
-		{
-			key = 1;
-			myAnimator.Play("dude_right");
-			pos += Vector3.right;
-			numSteps++;
-			stepText.text = "Steps: " + numSteps;
-			
-		}
-		
-		else if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && tr.position == pos)
-		{
-			key = 2;
-			myAnimator.Play("dude_left");
-			pos += Vector3.left;
-			numSteps++;
-			stepText.text = "Steps: " + numSteps;
-		}
-		
-		else if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && tr.position == pos)
-		{
-			key = 3;
-			myAnimator.Play("dude_back");
-			pos += Vector3.up;
-			numSteps++;
-			stepText.text = "Steps: " + numSteps;
-		}
-		
-		else if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && tr.position == pos)
-		{
-			key = 4;
-			myAnimator.Play("dude_front");
-			pos += Vector3.down;
-			numSteps++;
-			stepText.text = "Steps: " + numSteps;
-		}
-     
-		transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);
-	}
+    protected override void Start()
+    {
+        myAnimator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        stepText = GameObject.Find("StepText").GetComponent<Text>();
+        base.Start();
+    }
 
-	void OnTriggerEnter2D(Collider2D info)
-	{
-		if (info.gameObject.tag.Equals("wall"))
-		{
-			if (key == 1)
-			{
-				transform.position = Vector3.MoveTowards(transform.position, pos+= Vector3.left, Time.deltaTime * speed);
-			}
-			
-			if (key == 2)
-			{
-				transform.position = Vector3.MoveTowards(transform.position, pos+= Vector3.right, Time.deltaTime * speed);
-			}
-			
-			if (key == 3)
-			{
-				transform.position = Vector3.MoveTowards(transform.position, pos+= Vector3.down, Time.deltaTime * speed);
-			}
-			
-			if (key == 4)
-			{
-				transform.position = Vector3.MoveTowards(transform.position, pos+= Vector3.up, Time.deltaTime * speed);
-			}
+    bool MoveBox(float xDir, float yDir, out RaycastHit2D hit)
+    {
+        Vector2 start = transform.position;
+        Vector2 end = start + new Vector2(xDir, yDir);
 
-			key = 0;
+        collider.enabled = false;
+        hit = Physics2D.Linecast(start, end, pushingLayers);
+        collider.enabled = true;
 
-		}
-		
-		if (info.gameObject.tag.Equals("box"))
-		{
+        if (hit.transform == null)
+        {
+            return true;
+        }
 
-			if (key == 1 && tr.position == pos)
-			{
-				pos += Vector3.right;
-			}
+        return hit.transform.GetComponent<MoveController>().Move(xDir, yDir, out hit);
+    }
 
-			else if (key == 2 && tr.position == pos)
-			{
-				pos += Vector3.left;
-			}
+    public void Update()
+    {
+        if (moving)
+        {
+            return;
+        }
 
 
-			else if (key == 3 && tr.position == pos)
-			{
-				pos += Vector3.up;
-			}
+        float hor = Input.GetAxisRaw("Horizontal") / GameManager.scale;
+        float ver = Input.GetAxisRaw("Vertical") / GameManager.scale;
 
-			else if (key == 4 && tr.position == pos)
-			{
-				pos += Vector3.down;
-			}
+        if (hor!= 0)
+        {
+            ver = 0;
+        }
 
-			info.gameObject.transform.position = Vector3.MoveTowards(transform.position, 2 * pos, Time.deltaTime * speed);
-			key = 0;
-		} 
-		
-	}
-	
-	public int GetKey()
-	{
-		return key;
-	}
+        myAnimator.SetBool("walkLeft", false);
+        myAnimator.SetBool("walkRight", false);
+        myAnimator.SetBool("walkUp", false);
+        myAnimator.SetBool("walkDown", false);
+
+        if (hor != 0 || ver != 0)
+        {
+            if (hor > 0)
+            {
+                myAnimator.SetTrigger("walkRight");
+                audioSource.Play();
+                numSteps++;
+                stepText.text = numSteps.ToString();
+
+            }
+            else if (hor < 0)
+            {
+                myAnimator.SetTrigger("walkLeft");
+                audioSource.Play();
+                numSteps++;
+                stepText.text = numSteps.ToString();
+            }
+            else if (ver > 0)
+            {
+                myAnimator.SetTrigger("walkUp");
+                audioSource.Play();
+                numSteps++;
+                stepText.text = numSteps.ToString();
+            }
+            else if (ver < 0)
+            {
+                myAnimator.SetTrigger("walkDown");
+                audioSource.Play();
+                numSteps++;
+                stepText.text = numSteps.ToString();
+            }
+
+            RaycastHit2D hit = new RaycastHit2D();
+            if (MoveBox(hor, ver, out hit))
+            {
+                Move(hor, ver, out hit);
+            }
+        }
+    }
 }
