@@ -1,6 +1,6 @@
 # Sokoban
 
-## [Here is the link to Draft 3](https://ak5352.itch.io/sokoban-clone-draft-4)
+## [Here is the link to Draft 4](https://ak5352.itch.io/sokoban-clone-draft-4)
 Added reset functionality! Now the player can play the game without refreshing the browser!
 
 ## [Here is the link to Draft 3](https://ak5352.itch.io/sokoban-clone-d)
