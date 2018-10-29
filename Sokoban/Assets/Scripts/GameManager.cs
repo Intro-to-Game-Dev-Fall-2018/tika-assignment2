@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
         winText = GameObject.Find("WinText").GetComponent<Text>();
 
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
         boardScript = GetComponent<BoardManager>();
         goals = boardScript.SetupBoard(level);
     }

@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Refresh browser to try again
+  m_Text: Press R to Play Again
 --- !u!222 &237356693
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class EndLevelController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.GetKeyDown(KeyCode.X))
+		if (Input.GetKeyDown(KeyCode.R))
 		{
 			SceneManager.LoadScene("Level");
 		}

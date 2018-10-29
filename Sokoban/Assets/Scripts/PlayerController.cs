@@ -93,7 +93,7 @@ public class PlayerController : MoveController
             RaycastHit2D hit = new RaycastHit2D();
             if (MoveBox(hor, ver, out hit))
             {
-                Move(hor, ver, out hit);
+                  Move(hor, ver, out hit);
             }
         }
     }
