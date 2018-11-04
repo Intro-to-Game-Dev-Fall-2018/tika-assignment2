@@ -1,6 +1,6 @@
 # Sokoban
 
-##[Here is the link to the final draft of the game!](https://ak5352.itch.io/sokoban-lazy-kid-edition)
+## [Here is the link to the final draft of the game!](https://ak5352.itch.io/sokoban-lazy-kid-edition)
 Modified the game a bit to include different levels and a time limit mechanism. 
 
 ## [Here is the link to Draft 4](https://ak5352.itch.io/sokoban-clone-draft-4)
