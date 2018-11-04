@@ -12,9 +12,9 @@ public class LevelController : MonoBehaviour {
 	
 	void Update () 
 	{
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.C))
 		{
-			SceneManager.LoadScene("End");
+			SceneManager.LoadScene("Level2");
 		}
 	}
 }

@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press c to redo your chores
+  m_Text: Press c to redeeem yourself
 --- !u!222 &237356693
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -255,9 +255,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'that was close!
+  m_Text: 'uh-oh, mom is home
 
-    mom just got home!'
+    and she is mad'
 --- !u!222 &326219787
 CanvasRenderer:
   m_ObjectHideFlags: 0

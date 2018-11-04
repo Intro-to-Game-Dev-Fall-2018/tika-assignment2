@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndLevelController : MonoBehaviour {
+public class Level3Controller : MonoBehaviour 
+{
 
 	// Use this for initialization
 	void Start () {
@@ -16,7 +17,6 @@ public class EndLevelController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.C))
 		{
 			SceneManager.LoadScene("Level3");
-		}
-
+		}		
 	}
 }

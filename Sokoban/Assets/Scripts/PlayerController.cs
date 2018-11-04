@@ -7,16 +7,12 @@ public class PlayerController : MoveController
     public LayerMask pushingLayers;
     
     AudioSource audioSource;
-    Text stepText;
-    private int numSteps = 0;
-
     Animator myAnimator;
 
     protected override void Start()
     {
         myAnimator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        stepText = GameObject.Find("StepText").GetComponent<Text>();
         base.Start();
     }
 
@@ -64,30 +60,21 @@ public class PlayerController : MoveController
             {
                 myAnimator.SetTrigger("walkRight");
                 audioSource.Play();
-                numSteps++;
-                stepText.text = numSteps.ToString();
-
             }
             else if (hor < 0)
             {
                 myAnimator.SetTrigger("walkLeft");
                 audioSource.Play();
-                numSteps++;
-                stepText.text = numSteps.ToString();
             }
             else if (ver > 0)
             {
                 myAnimator.SetTrigger("walkUp");
                 audioSource.Play();
-                numSteps++;
-                stepText.text = numSteps.ToString();
             }
             else if (ver < 0)
             {
                 myAnimator.SetTrigger("walkDown");
                 audioSource.Play();
-                numSteps++;
-                stepText.text = numSteps.ToString();
             }
 
             RaycastHit2D hit = new RaycastHit2D();

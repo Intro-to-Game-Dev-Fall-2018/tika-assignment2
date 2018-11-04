@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoardManager : MonoBehaviour
 {
@@ -7,6 +8,30 @@ public class BoardManager : MonoBehaviour
     public GameObject goal;
     public GameObject player;
     public GameObject wall;
+    
+    static string[] levelneg1 = {
+            "#########",
+            "#....***#",
+            "#....*#*#",
+            "#....***#",
+            "#.ooo...#",
+            "#.o@o...#",
+            "#.ooo...#",
+            "#.......#",
+            "#########"
+        };
+    
+    static string[] level0 = {
+        "#########",
+        "#....***#",
+        "#...#*#*#",
+        "#....***#",
+        "#.ooo.#.#",
+        "#.o@o...#",
+        "#.ooo...#",
+        "#.......#",
+        "#########"
+    };
 
     static string[] level1 = {
         "#########",
@@ -19,7 +44,10 @@ public class BoardManager : MonoBehaviour
         "#.......#",
         "#########"
     };
-    static readonly string[][] levels = { level1 };
+    
+    static readonly string[][] levels1 = { level1 };
+    static readonly string[][] levels0 = { level0 };
+    static readonly string[][] levelsneg1 = { levelneg1 };
 
     Transform board;
 
@@ -27,9 +55,26 @@ public class BoardManager : MonoBehaviour
     {
         float scale = GameManager.scale;
         int goals = 0;
-
+        
         board = new GameObject("Board").transform;
-        string[] level = levels[levelIndex];
+
+        string[] level = levels0[levelIndex];
+
+        if (SceneManager.GetActiveScene().name.Equals("Level"))
+        {
+           level = levels1[levelIndex];
+        }
+        
+        else  if (SceneManager.GetActiveScene().name.Equals("Level2"))
+        {
+            level = levels0[levelIndex];
+        }
+
+        else
+        {
+            level = levelsneg1[levelIndex];
+        }
+        
         float maxY = level.Length;
         float maxX = 0;
 

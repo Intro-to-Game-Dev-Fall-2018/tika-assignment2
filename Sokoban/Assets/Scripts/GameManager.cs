@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
 
     int goals;
     Text winText;
+    Text timeText;
+    private float timeCounter;
+    private int timeConvert;
 
     void Awake()
     {
@@ -23,12 +26,40 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+        
+        if (SceneManager.GetActiveScene().name.Equals("Level"))
+        {
+            timeCounter = 90f;
+        }
+        
+        else  if (SceneManager.GetActiveScene().name.Equals("Level2"))
+        {
+            timeCounter = 75f;
+        }
 
+        else
+        {
+            timeCounter = 60f;
+        }
+
+        
         winText = GameObject.Find("WinText").GetComponent<Text>();
-
-        //DontDestroyOnLoad(this);
+        timeText = GameObject.Find("TimeText").GetComponent<Text>();
+       
         boardScript = GetComponent<BoardManager>();
         goals = boardScript.SetupBoard(level);
+    }
+
+    public void Update()
+    {
+        timeCounter -= Time.deltaTime;
+        timeConvert = (int) timeCounter;
+        timeText.text = timeConvert.ToString();
+        
+        if (timeCounter <= 0f)
+        {
+            SceneManager.LoadScene("BadEnd");
+        }
     }
 
     public void CheckWin()
@@ -40,17 +71,28 @@ public class GameManager : MonoBehaviour
             if (crate.GetComponent<CrateController>().onGoal)
             {
                 currentGoals += 1;
-                winText.text = currentGoals.ToString();
+                winText.text = currentGoals.ToString() + "/8";
             }
         }
 
         if (currentGoals == goals)
         {
-            //winText.text = "You Win!!!";
-            //SceneManager.UnloadSceneAsync("Level");
+            if (SceneManager.GetActiveScene().name.Equals("Level"))
+            {
+                SceneManager.LoadScene("Menu"); 
+            }
             
-            SceneManager.LoadScene("Menu");
-            
+            else if (SceneManager.GetActiveScene().name.Equals("Level2"))
+            {
+                SceneManager.LoadScene("Level"); 
+            }
+
+            else
+            {
+                SceneManager.LoadScene("Level2");
+            }        
         }
+
+        
     }
 }
